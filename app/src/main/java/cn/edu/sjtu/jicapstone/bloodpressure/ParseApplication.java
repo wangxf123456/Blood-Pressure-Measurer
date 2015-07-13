@@ -32,16 +32,12 @@ public class ParseApplication extends Application {
         // Add your initialization code here
         Parse.initialize(this, "RynSlEE4Es0NUg9CwuCuCaO0ABk13lWpJWFPhmHA", "HYdbMYqVx1jExHQZJjXpR96I5ndxtzm3EniTKhZe");
 
-
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
         // Optionally enable public read access.
-        // defaultACL.setPublicReadAccess(true);
+//        defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
 
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
 //        createData();
     }
 
@@ -67,7 +63,7 @@ public class ParseApplication extends Application {
             SimpleDateFormat sourceDateFormat = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
 
             try {
-                Date date = sourceDateFormat.parse("2015-07-5 00:00:00.0");
+                Date date = sourceDateFormat.parse("2015-07-10 00:00:00.0");
                 date.setHours(i);
                 record.put("date", date);
             } catch (java.text.ParseException e) {

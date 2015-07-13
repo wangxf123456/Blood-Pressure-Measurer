@@ -122,14 +122,16 @@ public class ChartActivity extends Activity {
 		} else {
 			dataVector = new Vector<UserData>();
 			final String username = getIntent().getStringExtra("username");
-			System.out.println("username: " + username);
+			System.out.println("chart username: " + username);
 			ParseQuery<ParseObject> query = ParseQuery.getQuery("Record");
 			query.whereEqualTo("user", username);
 			query.orderByAscending("date");
 			query.findInBackground(new FindCallback<ParseObject>() {
 				public void done(List<ParseObject> rList, ParseException e) {
+					System.out.printf("list size: %d", rList.size());
 					if (e == null) {
 						for (ParseObject r : rList) {
+							System.out.printf("%d", r.getInt("highPressure"));
 							int h = r.getInt("highPressure");
 							int l = r.getInt("lowPressure");
 							int rate = r.getInt("heartRate");
@@ -172,7 +174,7 @@ public class ChartActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (!endDate.after(startDate)) {
-					Toast.makeText(ChartActivity.this, "�������ô���", Toast.LENGTH_SHORT).show();
+					Toast.makeText(ChartActivity.this, "End date is before start date", Toast.LENGTH_SHORT).show();
 				} else {
 
 

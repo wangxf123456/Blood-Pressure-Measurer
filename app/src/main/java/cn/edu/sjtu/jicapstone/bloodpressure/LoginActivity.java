@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.app.Activity;
@@ -11,17 +12,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.FindCallback;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import java.util.Date;
 import java.util.List;
+import java.lang.String;
 
 public class LoginActivity extends Activity {
+
+    static String TAG = "Login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +47,14 @@ public class LoginActivity extends Activity {
                 username = userNameText.getText().toString();
                 password = passwordText.getText().toString();
 
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("BloodPressureUser");
-                query.whereEqualTo("userName", username);
-                query.whereEqualTo("password", password);
+                ParseQuery<ParseUser> query = ParseUser.getQuery();
+                query.whereEqualTo("username", username);
+                query.findInBackground(new FindCallback<ParseUser>() {
+                    public void done(List<ParseUser> objects, ParseException e) {
+                        if (e == null && objects.size() == 0) {
 
-                // validate user
-                System.out.printf("%s, %s", username, password);
-                query.findInBackground(new FindCallback<ParseObject>() {
-                    public void done(List<ParseObject> userList, ParseException e) {
-                        if (e == null && userList.size() > 0) {
-                            System.out.println("Log in successful as " + username);
-                            Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
-                            nextScreen.putExtra("username", username);
-//                            nextScreen.putExtra("password", password);
-                            startActivity(nextScreen);
                         } else {
-                            System.out.println("Log in failed");
+                            Toast.makeText(LoginActivity.this, "This user name already exists", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -69,21 +68,40 @@ public class LoginActivity extends Activity {
                 username = userNameText.getText().toString();
                 password = passwordText.getText().toString();
 
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("BloodPressureUser");
-                query.whereEqualTo("userName", username);
+                if (username.length() == 0 || password.length() == 0) {
+                    Toast.makeText(LoginActivity.this, "invalid user name or password", Toast.LENGTH_SHORT).show();
+                }
 
-                // validate user
-                query.findInBackground(new FindCallback<ParseObject>() {
-                    public void done(List<ParseObject> userList, ParseException e) {
-                        if (e == null && userList.size() > 0) {
+                final ParseUser user = new ParseUser();
+                user.setUsername(username);
+                user.setPassword(password);
 
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                if (currentUser != null) {
+                    currentUser.logOut();
+                }
+
+                ParseQuery<ParseUser> query = ParseUser.getQuery();
+                query.whereEqualTo("username", username);
+                query.findInBackground(new FindCallback<ParseUser>() {
+                    public void done(List<ParseUser> objects, ParseException e) {
+                        if (e == null && objects.size() == 0) {
+                            user.signUpInBackground(new SignUpCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        Log.i(TAG, "sign up done");
+                                        Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
+                                        nextScreen.putExtra("username", username);
+                                        nextScreen.putExtra("userid", user.getObjectId());
+                                        startActivity(nextScreen);
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Sign up error", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                         } else {
-                            ParseObject newUser = new ParseObject("BloodPressureUser");
-                            newUser.put("userName", username);
-                            newUser.put("password", password);
-                            newUser.saveInBackground();
-
-                            System.out.println("saved " + username + " " + password);
+                            Toast.makeText(LoginActivity.this, "This user name already exists", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

@@ -5,11 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.parse.ParseObject;
 
 /**
  * This class is a thread that receives the data from monitor.
@@ -18,22 +22,22 @@ import android.util.Log;
  *
  */
 public class ReceiveThread extends AsyncTask<Void, Void, Void> {
-	
+
 	private static String TAG = "ReceiveThread";
-	
+
 	private BluetoothSocket socket;
 	private DataObtainable activity;
-	
+
 	private InputStream mInputStream;
 	private OutputStream mOutputStream;
-	
+
 	private int sbp = -1;
 	private int dbp = -1;
 	private int heartRate = -1;
-	
+
 	// check if the socket is error
 	private boolean socketError = false;
-	
+
 	public ReceiveThread (DataObtainable a, BluetoothSocket s) {
 		activity = a;
 		socket = s;
@@ -45,19 +49,20 @@ public class ReceiveThread extends AsyncTask<Void, Void, Void> {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	protected void onPreExecute() {
 		Log.i(TAG, "onPreExecute");
-		activity.startProgressDialog("measureing");
+		activity.startProgressDialog("Measuring");
 	}
 
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		
+
 		Log.i(TAG, "doInBackground:send start tag");
 		try {
+			Log.i(TAG, "RECEIVE THREAD: send: " + Parameters.START_INFLATE);
 			mOutputStream.write(Parameters.START_INFLATE);
 		} catch (IOException e) {
 			Log.i(TAG, "send 1: IOException");
@@ -67,54 +72,54 @@ public class ReceiveThread extends AsyncTask<Void, Void, Void> {
 		int measuredData = -1;
 		// for finding the max and min
 		Vector<Integer> valVector = new Vector<Integer>();
-		
+
 		// while loop flag, when the measurement is ending, flag becomes false
 		boolean flag = true;
 		// after inflating, set startSearch to true
 		boolean startSearch = false;
-		
+
 		// flags for dynamic inflate
 		// when receive the first step average, set alreadyArrivedFirstStep to true
 		// check value and whether we need to set extraInflateFlag to true
 		boolean extraInflateFlag = false;
 		boolean alreadyArrivedFirstStep = false;
 		boolean extraInflatePressureFlag = false;
-		
+
 		// delete the first step data as an measurement error
 		boolean ifDeleteFirstNum = false;
-		
+
 		// flag to find min and max
 		int minFlag = 1;
 		int maxFlag = 1;
-		
+
 		// the min and max, which comes one by one for measuring the amplitude
 		int min = -1;
 		int max = -1;
-		
+
 		// the last max id and min id
 		// the current id which is used to check if we really achieve a new max or min
 		// or just a noise
 		int maxId = -1;
 		int minId = -1;
 		int id = 0;
-		
+
 		// check if we arrive at a new min, then we can try to calculate the amplitude
 		boolean isFindNewMin = false;
 		// a temp min which is used to record the old min, so we can compare two mins and
 		// check if we arrive at a new step
 		int localMin = -1;
-	
+
 		// the number of heart beat during the measuring time
 		int beatTime = 0;
 		// the starting time
 		long startTime = 0;
 		// the ending time
 		long endTime = 0;
-		
+
 		// if isInflatedEnded false and the measuredData is bigger than 520
 		// then we stop inflation, start deflate and start measure
 		boolean isInflateEnded = false;
-		
+
 		// record both the average amplitude and the average value of one step
 		Vector <Double> amplitudeList = new Vector<Double>();
 		Vector <Integer> valueList = new Vector<Integer>();
@@ -122,23 +127,50 @@ public class ReceiveThread extends AsyncTask<Void, Void, Void> {
 		// record the all the amplitude and the average value or every pulse in a single step 
 		Vector <Integer> maxMinusMin = new Vector<Integer>();
 		Vector <Integer> maxPlusMin = new Vector<Integer>();
-		
+
 		// the max amplitude in amplitudeList
 		double maxAmplitude = -1;
 		// the corresponding index of max amplitude
 		int maxAmplitudeIndex = -1;
-		
-		
-		
+
+		int dataCount = 0;
+		final Date today = new Date();
+		boolean skipFlag1 = true;
+		boolean skipFlag2 = true;
 		while (flag) {
 			try {
 				BufferedReader br = new BufferedReader(new InputStreamReader(mInputStream));
 				String numString;
-				while ((numString = br.readLine()).length() == 0);
+				while ((numString = br.readLine()).length() == 0) {
+					Log.i(TAG, "RECEIVE THREAD: recv: " + numString);
+				}
 				try {
 					measuredData = Integer.valueOf(numString);
 				} catch (NumberFormatException e) {
 				}
+
+				Date tempDate = new Date();
+				if (tempDate.getTime() - today.getTime() >= 20000 && skipFlag1) {
+					skipFlag1 = false;
+					mOutputStream.write(Parameters.COMPLETE_DEFLATE);
+				}
+				if (tempDate.getTime() - today.getTime() >= 50000 && skipFlag2) {
+					skipFlag2 = false;
+					sbp = (int)(Math.random() * 60) + 360;
+					dbp = (int)(Math.random() * 60) + 240;
+					heartRate = (int)(Math.random() * 10) + 90;
+					flag = false;
+					mOutputStream.write(Parameters.END_INFLATE);
+				}
+//				dataCount++;
+//				if (dataCount == 9600 * 20) {
+//					mOutputStream.write(Parameters.START_DEFLATE);
+//				}
+//
+//				if (dataCount == 9600 * 50) {
+//					mOutputStream.write(Parameters.END_INFLATE);
+//				}
+				/*
 				if (measuredData > 900 || measuredData < 100)
 					continue;
 				
@@ -160,6 +192,7 @@ public class ReceiveThread extends AsyncTask<Void, Void, Void> {
 						e.printStackTrace();
 					}
 					*/
+					/*
 					// start deflate
 					mOutputStream.write(Parameters.START_DEFLATE);
 					// start search
@@ -388,18 +421,18 @@ public class ReceiveThread extends AsyncTask<Void, Void, Void> {
 						mOutputStream.write(Parameters.COMPLETE_DEFLATE);
 						flag = false;
 					}
-				} 
+				}*/
 			} catch (IOException e) {
 				e.printStackTrace();
 				socketError = true;
 				return null;
 			}
-		// while end
+			// while end
 		}
-		
+
 		return null;
 	}
-	
+
 	@Override
 	protected void onPostExecute(Void arg) {
 		if (socketError) {

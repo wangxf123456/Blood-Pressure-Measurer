@@ -20,6 +20,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.parse.ParseObject;
+
 /**
  * This class is the measure activity.
  * It extends from Activity. And it implements DataObtainable interface to receive data from other thread.
@@ -212,6 +214,16 @@ public class MeasureActivity extends Activity
 		measuredSbp = convert(sbpValue);
 		measuredRate = heartRate;
 		Log.i(TAG, "heartRate is: " + heartRate);
+		ParseObject record = new ParseObject("Record");
+		record.put("user", "tiatia");
+		record.put("highPressure", measuredSbp);
+		record.put("lowPressure", measuredDbp);
+		record.put("heartRate", heartRate);
+
+		Date date = new Date();
+		record.put("date", date);
+
+		record.saveInBackground();
 		int measuredSbpHundred = measuredSbp / 100;
 		int measuredSbpTen = (measuredSbp % 100) / 10;
 		int measuredSbpDigit = measuredSbp % 10;

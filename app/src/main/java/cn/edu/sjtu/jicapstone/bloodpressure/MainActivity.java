@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +18,10 @@ import com.parse.ParseObject;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Date;
+
 /**
  * This class is the main activity.
  * It extends from Activity class.
@@ -24,7 +29,6 @@ import org.w3c.dom.Text;
  *
  */
 public class MainActivity extends Activity {
-	ParseObject test;
 	private static String TAG = "MainActivity";
 
 	private static int REQUEST_ENABLE_BT = 2;
@@ -40,7 +44,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		measureView = findViewById(R.id.measureLayout);
 		measureView.setOnClickListener(new OnClickListener() {
 			@Override

@@ -38,7 +38,7 @@ public class SearchThread extends AsyncTask<Void, Void, BluetoothDevice> {
 		// find the paired
 		Set<BluetoothDevice> pairedDevices = adapter.getBondedDevices();
 		for (BluetoothDevice d : pairedDevices) {
-			if (d.getAddress().equals(Parameters.MAC_ADDR)) {
+			if (d.getName().equals("HC-05")) {
 				Log.i(TAG, "doInBackground : find paired");
 				device = d;
 				break;
