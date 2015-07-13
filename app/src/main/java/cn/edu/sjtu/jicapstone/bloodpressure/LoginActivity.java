@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import com.parse.ParseException;
 import com.parse.FindCallback;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+import com.parse.LogInCallback;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +31,7 @@ import java.lang.String;
 public class LoginActivity extends Activity {
 
     static String TAG = "Login";
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class LoginActivity extends Activity {
 
         signInButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
+                dialog = ProgressDialog.show(LoginActivity.this, "wait...", "logging in");
                 final String username;
                 final String password;
                 username = userNameText.getText().toString();
@@ -49,13 +53,18 @@ public class LoginActivity extends Activity {
 
                 ParseQuery<ParseUser> query = ParseUser.getQuery();
                 query.whereEqualTo("username", username);
-                query.findInBackground(new FindCallback<ParseUser>() {
-                    public void done(List<ParseUser> objects, ParseException e) {
-                        if (e == null && objects.size() == 0) {
-
+                query.whereEqualTo("password", password);
+                ParseUser.logInInBackground(username, password, new LogInCallback() {
+                    public void done(ParseUser user, ParseException e) {
+                        if (user != null) {
+                            Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
+                            nextScreen.putExtra("username", username);
+                            nextScreen.putExtra("userid", ParseUser.getCurrentUser().getObjectId());
+                            startActivity(nextScreen);
                         } else {
-                            Toast.makeText(LoginActivity.this, "This user name already exists", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Invalid user name or password", Toast.LENGTH_SHORT).show();
                         }
+                        dialog.dismiss();
                     }
                 });
             }
@@ -63,6 +72,7 @@ public class LoginActivity extends Activity {
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                dialog = ProgressDialog.show(LoginActivity.this, "wait...", "signing up");
                 final String username;
                 final String password;
                 username = userNameText.getText().toString();
@@ -103,6 +113,7 @@ public class LoginActivity extends Activity {
                         } else {
                             Toast.makeText(LoginActivity.this, "This user name already exists", Toast.LENGTH_SHORT).show();
                         }
+                        dialog.dismiss();
                     }
                 });
 

@@ -71,6 +71,7 @@ public class MainActivity extends Activity {
 					startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 				} else {
 					Intent intent = new Intent();
+					intent.putExtra("userid", getIntent().getStringExtra("userid"));
 					intent.setClass(arg0.getContext(), MeasureActivity.class);
 					MainActivity.this.startActivity(intent);
 				}
@@ -85,8 +86,8 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent = new Intent();
 				intent.setClass(v.getContext(), ChartActivity.class);
-				if (getIntent().getStringExtra("username") != null) {
-					intent.putExtra("username", getIntent().getStringExtra("username"));
+				if (getIntent().getStringExtra("userid") != null) {
+					intent.putExtra("userid", getIntent().getStringExtra("userid"));
 					intent.putExtra("isOffline", false);
 				} else {
 					intent.putExtra("isOffline", true);
@@ -107,8 +108,9 @@ public class MainActivity extends Activity {
 		loginView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (getIntent().getStringExtra("username") != null) {
+				if (getIntent().getStringExtra("userid") != null) {
 					getIntent().removeExtra("username");
+					getIntent().removeExtra("userid");
 					loginStateText.setText("登录");
 					loginStateEngText.setText("login");
 				} else {
@@ -122,9 +124,9 @@ public class MainActivity extends Activity {
 		cloudView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (getIntent().getStringExtra("username") != null) {
+				if (getIntent().getStringExtra("userid") != null) {
 					Intent nextScreen = new Intent(getApplicationContext(), CloudManagementActivity.class);
-					nextScreen.putExtra("username", getIntent().getStringExtra("username"));
+					nextScreen.putExtra("userid", getIntent().getStringExtra("userid"));
 					startActivity(nextScreen);
 				}
 			}

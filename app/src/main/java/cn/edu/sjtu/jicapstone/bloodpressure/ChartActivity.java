@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,6 +49,8 @@ public class ChartActivity extends Activity {
 	
 	private ListView resultView;
 	private ListItemAdapter adapter;
+
+	private ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,34 +123,35 @@ public class ChartActivity extends Activity {
 			dataVector = DataAccess.getInstance().readData();
 			configureUI(dataVector);
 		} else {
+			dialog = ProgressDialog.show(ChartActivity.this, "wait...", "Retrieving data");
 			dataVector = new Vector<UserData>();
-			final String username = getIntent().getStringExtra("username");
-			System.out.println("chart username: " + username);
+			final String userid = getIntent().getStringExtra("userid");
 			ParseQuery<ParseObject> query = ParseQuery.getQuery("Record");
-			query.whereEqualTo("user", username);
+			query.whereEqualTo("userid", userid);
 			query.orderByAscending("date");
 			query.findInBackground(new FindCallback<ParseObject>() {
 				public void done(List<ParseObject> rList, ParseException e) {
 					System.out.printf("list size: %d", rList.size());
 					if (e == null) {
 						for (ParseObject r : rList) {
-							System.out.printf("%d", r.getInt("highPressure"));
 							int h = r.getInt("highPressure");
 							int l = r.getInt("lowPressure");
 							int rate = r.getInt("heartRate");
 							Date d = r.getDate("date");
-							UserData newRecord = new UserData(d, l, h, rate, username);
+							String i = r.getObjectId();
+							UserData newRecord = new UserData(d, l, h, rate, userid, i);
 							dataVector.add(newRecord);
 						}
 					}
-					System.out.println(dataVector.size());
-					for (int i = 0; i < dataVector.size(); i++) {
-						System.out.printf("%d, %d, %d, %s\n", dataVector.get(i).getHeartRate(),
-								dataVector.get(i).getDbpValue(),
-								dataVector.get(i).getSbpValue(),
-								dataVector.get(i).getUsername());
-					}
+//					System.out.println(dataVector.size());
+//					for (int i = 0; i < dataVector.size(); i++) {
+//						System.out.printf("%d, %d, %d, %s\n", dataVector.get(i).getHeartRate(),
+//								dataVector.get(i).getDbpValue(),
+//								dataVector.get(i).getSbpValue(),
+//								dataVector.get(i).getUsername());
+//					}
 					configureUI(dataVector);
+					dialog.dismiss();
 				}
 			});
 		}

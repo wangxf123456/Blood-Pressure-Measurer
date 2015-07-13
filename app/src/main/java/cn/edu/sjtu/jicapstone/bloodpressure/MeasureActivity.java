@@ -215,7 +215,7 @@ public class MeasureActivity extends Activity
 		measuredRate = heartRate;
 		Log.i(TAG, "heartRate is: " + heartRate);
 		ParseObject record = new ParseObject("Record");
-		record.put("user", "tiatia");
+		record.put("userid", getIntent().getStringExtra("userid"));
 		record.put("highPressure", measuredSbp);
 		record.put("lowPressure", measuredDbp);
 		record.put("heartRate", heartRate);

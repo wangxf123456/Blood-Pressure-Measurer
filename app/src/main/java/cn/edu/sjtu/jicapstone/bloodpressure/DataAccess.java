@@ -118,7 +118,7 @@ public class DataAccess {
 					result.add(new UserData(df.parse(inString.substring(0, firstDelimiterPos)),
 							Integer.parseInt(inString.substring(firstDelimiterPos + 1, secondDelimiterPos)), 
 							Integer.parseInt(inString.substring(secondDelimiterPos + 1, lastDelimiterPos)), 
-							Integer.parseInt(inString.substring(lastDelimiterPos + 1).trim()), null));
+							Integer.parseInt(inString.substring(lastDelimiterPos + 1).trim()), null, null));
 				} catch (NumberFormatException e) {
 					Log.i(TAG, "readData: bad number format");
 					e.printStackTrace();

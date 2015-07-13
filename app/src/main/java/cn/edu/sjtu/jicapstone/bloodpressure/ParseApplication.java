@@ -38,25 +38,14 @@ public class ParseApplication extends Application {
 //        defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
 
-//        createData();
+        createData();
     }
 
     public void createData() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Record");
-        query.whereEqualTo("user", "tiatia");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> rList, ParseException e) {
-                if (e == null) {
-                    for (int i = 0; i < rList.size(); i++) {
-                        rList.get(i).deleteInBackground();
-                    }
-                }
-            }
-        });
 
         for (int i = 0; i < 5; i++) {
             ParseObject record = new ParseObject("Record");
-            record.put("user", "tiatia");
+            record.put("userid", ParseUser.getCurrentUser().getObjectId());
             record.put("highPressure", 130 + Math.random() * 50);
             record.put("lowPressure", 80 + Math.random() * 50);
             record.put("heartRate", (int)(60 + Math.random() * 50));

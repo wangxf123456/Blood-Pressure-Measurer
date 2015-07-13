@@ -12,14 +12,16 @@ public class UserData {
 	private int dbpValue;
 	private int sbpValue;
 	private int heartRate;
-	private String username;
-	public UserData(Date date, int dbpValue, int sbpValue, int heartRate, String username) {
+	private String userid;
+	private String itemid;
+	public UserData(Date date, int dbpValue, int sbpValue, int heartRate, String userid, String itemid) {
 		super();
 		this.date = date;
 		this.dbpValue = dbpValue;
 		this.sbpValue = sbpValue;
 		this.heartRate = heartRate;
-		this.username = username;
+		this.userid = userid;
+		this.itemid = itemid;
 	}
 	public java.util.Date getDate() {
 		return date;
@@ -47,10 +49,17 @@ public class UserData {
 		this.heartRate = heartRate;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserid() {
+		return userid;
 	}
 	public void setUsername(String username) {
-		this.username = username;
+		this.userid = userid;
+	}
+
+	public String getItemid() {
+		return itemid;
+	}
+	public void setItemid(String itemid) {
+		this.itemid = itemid;
 	}
 }

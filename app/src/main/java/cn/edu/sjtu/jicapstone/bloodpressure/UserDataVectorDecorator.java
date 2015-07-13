@@ -37,6 +37,7 @@ public abstract class UserDataVectorDecorator {
 		// heart rate vector
 		averageRate = new Vector<Integer> ();
 	}
+
 	/**
 	 * This function gets the start time
 	 * @return the start time

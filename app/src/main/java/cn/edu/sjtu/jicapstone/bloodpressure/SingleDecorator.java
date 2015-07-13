@@ -12,10 +12,12 @@ import java.util.Vector;
 public class SingleDecorator extends UserDataVectorDecorator{
 	
 	private Date singleDate;
+	private Vector<String> idVector;
 	
 	public SingleDecorator (Vector<UserData> userDataVector, Date singleDate) {
 		super(userDataVector);
 		this.singleDate = singleDate;
+		idVector = new Vector<String>();
 		
 		int maxValue = -1;
 		int minValue = 10000;
@@ -35,6 +37,7 @@ public class SingleDecorator extends UserDataVectorDecorator{
 				averageValue.get(0).add(ud.getDbpValue());
 				averageValue.get(1).add(ud.getSbpValue());
 				averageRate.add(ud.getHeartRate());
+				idVector.add(ud.getItemid());
 				
 				if (ud.getSbpValue() > maxValue)
 					maxValue = ud.getSbpValue();
@@ -51,6 +54,10 @@ public class SingleDecorator extends UserDataVectorDecorator{
 		endValue = maxValue + 5;
 		startTime = minDate - dateSpace;
 		endTime = maxDate + dateSpace;
+	}
+
+	public String getIdAtLocation(int location) {
+		return idVector.get(location);
 	}
 
 	@Override

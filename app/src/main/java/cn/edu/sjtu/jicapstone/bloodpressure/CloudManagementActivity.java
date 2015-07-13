@@ -2,6 +2,8 @@ package cn.edu.sjtu.jicapstone.bloodpressure;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -38,21 +41,31 @@ public class CloudManagementActivity extends Activity {
     private ImageView searchView;
 
     private ImageView measureView;
-    private ImageView settingView;
+    private ImageView deleteView;
 
     private ListView resultView;
     private ListItemAdapter adapter;
 
+    // used to delete records
+    private Vector<String> selectedRecord;
+
+    private boolean isDetailView;
+    private int selectedRow;
+
+    private ProgressDialog dialog;
+    private Vector<UserData> dataVector;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cloud_management);
 
+        dataVector = new Vector<UserData>();
+        selectedRecord = new Vector<String>();
         startDateView = (TextView)findViewById(R.id.textView1);
         endDateView = (TextView)findViewById(R.id.textView2);
         searchView = (ImageView)findViewById(R.id.imageView1);
         measureView = (ImageView)findViewById(R.id.imageView3);
-        settingView = (ImageView)findViewById(R.id.imageView2);
+        deleteView = (ImageView)findViewById(R.id.imageView2);
 
         resultView = (ListView)findViewById(R.id.ListView1);
         final Date today = new Date();
@@ -93,11 +106,32 @@ public class CloudManagementActivity extends Activity {
             }
         });
 
-        final Vector<UserData> dataVector;
-        dataVector = new Vector<UserData>();
-        final String username = getIntent().getStringExtra("username");
+        deleteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < selectedRecord.size(); i++) {
+                    final String s = selectedRecord.get(i);
+                    final int temp = i;
+                    System.out.println("Deleting " + s);
+                    ParseObject po = ParseObject.createWithoutData("Record", s);
+                    po.deleteEventually(new DeleteCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            System.out.println(s + " deleted sucessfully");
+                            deleteRecordWithId(s);
+                        }
+                    });
+                }
+                selectedRecord.removeAllElements();
+                configureUI(dataVector);
+            }
+        });
+
+        dialog = ProgressDialog.show(CloudManagementActivity.this, "wait...", "Retrieving data");
+
+        final String userid = getIntent().getStringExtra("userid");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Record");
-        query.whereEqualTo("user", username);
+        query.whereEqualTo("userid", userid);
         query.orderByAscending("date");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> rList, ParseException e) {
@@ -107,18 +141,13 @@ public class CloudManagementActivity extends Activity {
                         int l = r.getInt("lowPressure");
                         int rate = r.getInt("heartRate");
                         Date d = r.getDate("date");
-                        UserData newRecord = new UserData(d, l, h, rate, username);
+                        String i = r.getObjectId();
+                        UserData newRecord = new UserData(d, l, h, rate, userid, i);
                         dataVector.add(newRecord);
                     }
                 }
-                System.out.println(dataVector.size());
-                for (int i = 0; i < dataVector.size(); i++) {
-                    System.out.printf("%d, %d, %d, %s\n", dataVector.get(i).getHeartRate(),
-                            dataVector.get(i).getDbpValue(),
-                            dataVector.get(i).getSbpValue(),
-                            dataVector.get(i).getUsername());
-                }
                 configureUI(dataVector);
+                dialog.dismiss();
             }
         });
     }
@@ -139,9 +168,11 @@ public class CloudManagementActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (!endDate.after(startDate)) {
-                    Toast.makeText(CloudManagementActivity.this, "�������ô���", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CloudManagementActivity.this, "End date is before start date", Toast.LENGTH_SHORT).show();
                 } else {
-                    UserDataVectorDecorator decorator = new RangeDecorator(dataVector, startDate, endDate);
+                    isDetailView = false;
+                    selectedRow = -1;
+                    final UserDataVectorDecorator decorator = new RangeDecorator(dataVector, startDate, endDate);
                     adapter = new ListItemAdapter(CloudManagementActivity.this, decorator.getDates(), decorator.getValueLists().get(0),
                             decorator.getValueLists().get(1), decorator.getRateList(), "yyyy-MM-dd");
                     resultView.setAdapter(adapter);
@@ -153,13 +184,22 @@ public class CloudManagementActivity extends Activity {
                         @Override
                         public void onItemClick(AdapterView<?> parent,
                                                 View view, int position, long id) {
-                            UserDataVectorDecorator tempDecorator = new SingleDecorator(dataVector, tempDateList.get(position));
 
-                            // set up the listview
-                            adapter = new ListItemAdapter(CloudManagementActivity.this, tempDecorator.getDates(), tempDecorator.getValueLists().get(0),
-                                    tempDecorator.getValueLists().get(1), tempDecorator.getRateList(), "HH:mm");
-                            resultView.setAdapter(adapter);
-                            resultView.setOnItemClickListener(null);
+                            System.out.println("click row: " + position);
+                            if (isDetailView) {
+                                UserDataVectorDecorator tempDecorator = new SingleDecorator(dataVector, tempDateList.get(selectedRow));
+                                // delete records
+                                resultView.getChildAt(position).setBackgroundColor(Color.GREEN);
+                                selectedRecord.add(((SingleDecorator) tempDecorator).getIdAtLocation(position));
+                            } else {
+                                UserDataVectorDecorator tempDecorator = new SingleDecorator(dataVector, tempDateList.get(position));
+                                // set up the listview
+                                selectedRow = position;
+                                adapter = new ListItemAdapter(CloudManagementActivity.this, tempDecorator.getDates(), tempDecorator.getValueLists().get(0),
+                                        tempDecorator.getValueLists().get(1), tempDecorator.getRateList(), "HH:mm");
+                                resultView.setAdapter(adapter);
+                                isDetailView = true;
+                            }
                         }
 
                     });
@@ -169,6 +209,14 @@ public class CloudManagementActivity extends Activity {
         });
     }
 
+    public void deleteRecordWithId(String id) {
+        for (int i = 0; i < dataVector.size(); i++) {
+            if (id == dataVector.get(i).getItemid()) {
+                dataVector.remove(i);
+                break;
+            }
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
