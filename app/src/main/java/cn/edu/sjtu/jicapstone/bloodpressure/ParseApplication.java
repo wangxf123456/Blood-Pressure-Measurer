@@ -38,17 +38,23 @@ public class ParseApplication extends Application {
 //        defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
 
-        createData();
+//        createData();
     }
 
     public void createData() {
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 24; i++) {
             ParseObject record = new ParseObject("Record");
             record.put("userid", ParseUser.getCurrentUser().getObjectId());
-            record.put("highPressure", 130 + Math.random() * 50);
-            record.put("lowPressure", 80 + Math.random() * 50);
+            if (i <= 8 || i >= 22) {
+                record.put("highPressure", 130 + Math.random() * 20);
+                record.put("lowPressure", 80 + Math.random() * 20);
+            } else {
+                record.put("highPressure", 130 + Math.random() * 40);
+                record.put("lowPressure", 80 + Math.random() * 40);
+            }
             record.put("heartRate", (int)(60 + Math.random() * 50));
+
             SimpleDateFormat sourceDateFormat = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
 
             try {

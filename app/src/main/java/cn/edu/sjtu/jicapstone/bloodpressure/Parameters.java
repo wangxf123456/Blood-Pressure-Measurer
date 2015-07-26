@@ -26,8 +26,8 @@ public class Parameters {
 	public static double DBP_FACTOR = 0.66;
 	
 	// the linear formula that convert signal to actual pressure
-	public static double SLOP = 0.328;
-	public static double BASE = 0.0;
+	public static double SLOP = 0.396;
+	public static double BASE = 5.0;
 	
 	// end inflate level
 	public static int START_MEASURE_FLAG = 550;

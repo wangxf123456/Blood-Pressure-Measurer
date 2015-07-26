@@ -25,5 +25,12 @@
     <string name="take_english">Record</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_cloud_management">CloudManagementActivity</string>
+    <string name="title_activity_repeat">RepeatActivity</string>
+    <string name="longtime_measure_chinese">24 小 时 监 测</string>
+    <string name="longtime_measure_english">24-Hour Measurement</string>
+    <string name="next_measure_english">Next measurement scheduled at</string>
+    <string name="start_repeat_english">Start 24 Hour Measurement</string>
+    <string name="stop_repeat_english">Stop 24 Hour Measurement</string>
+    <string name="time_undefined">--------</string>
 
 </resources>

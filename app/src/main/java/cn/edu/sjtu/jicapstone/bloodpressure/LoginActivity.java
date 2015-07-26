@@ -60,6 +60,7 @@ public class LoginActivity extends Activity {
                             Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
                             nextScreen.putExtra("username", username);
                             nextScreen.putExtra("userid", ParseUser.getCurrentUser().getObjectId());
+                            MainActivity.userid = ParseUser.getCurrentUser().getObjectId();
                             startActivity(nextScreen);
                         } else {
                             Toast.makeText(LoginActivity.this, "Invalid user name or password", Toast.LENGTH_SHORT).show();

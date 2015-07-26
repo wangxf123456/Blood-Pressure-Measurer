@@ -37,8 +37,11 @@ public class MainActivity extends Activity {
 	private View historyView;
 	private View loginView;
 	private View cloudView;
+	private View repeatView;
 	private TextView loginStateText;
 	private TextView loginStateEngText;
+
+	public static String userid;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +135,16 @@ public class MainActivity extends Activity {
 			}
 		});
 
+		repeatView = findViewById(R.id.repeatLayout);
+		repeatView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(v.getContext(), RepeatActivity.class);
+				MainActivity.this.startActivity(intent);
+
+			}
+		});
 		ParseAnalytics.trackAppOpenedInBackground(getIntent());
 	}
 

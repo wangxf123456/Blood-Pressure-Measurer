@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -53,6 +54,19 @@
             android:name="cn.edu.sjtu.jicapstone.bloodpressure.CloudManagementActivity"
             android:label="@string/title_activity_cloud_management" >
         </activity>
+        <activity
+            android:name="cn.edu.sjtu.jicapstone.bloodpressure.RepeatActivity"
+            android:label="@string/title_activity_repeat" >
+        </activity>
+
+        <receiver android:name="cn.edu.sjtu.jicapstone.bloodpressure.AlarmReceiver" />
+
+        <service
+            android:name="cn.edu.sjtu.jicapstone.bloodpressure.BackgroundMeasureService"
+            android:enabled="true"
+            android:label="BloodPressureMonitorService" >
+        </service>
+"
     </application>
 
 </manifest>

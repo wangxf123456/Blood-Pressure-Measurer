@@ -208,7 +208,10 @@
     <string name="history_english">History</string>
     <string name="login_chinese">登 录</string>
     <string name="login_english">Login</string>
+    <string name="longtime_measure_chinese">24 小 时 监 测</string>
+    <string name="longtime_measure_english">24-Hour Measurement</string>
     <string name="measure">Measure</string>
+    <string name="next_measure_english">Next measurement scheduled at</string>
     <string name="record">Record</string>
     <string name="record_chinese">测 量 记 录</string>
     <string name="record_english">Measurement Record</string>
@@ -216,16 +219,20 @@
     <string name="start_english">Start</string>
     <string name="start_measure_chinese">开 始 测 量</string>
     <string name="start_measure_english">Start Measurement</string>
+    <string name="start_repeat_english">Start 24 Hour Measurement</string>
     <!-- From: file:/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure%20code/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
     <!-- From: file:/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure%20code/app/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="stop_repeat_english">Stop 24 Hour Measurement</string>
     <string name="take_chinese">记     录</string>
     <string name="take_english">Record</string>
+    <string name="time_undefined">--------</string>
     <string name="title_activity_chart">ChartActivity</string>
     <string name="title_activity_cloud_management">CloudManagementActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_repeat">RepeatActivity</string>
     <string name="title_activity_test">TestActivity</string>
     <!-- From: file:/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure%20code/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
