@@ -38,6 +38,13 @@ public class ConnectThread extends AsyncTask<Void, Void, BluetoothSocket>{
 	@Override
 	protected BluetoothSocket doInBackground(Void... params) {
 		try {
+			System.out.println("---------------");
+			System.out.println(device == null);
+			System.out.println(device.getUuids() == null);
+			System.out.println(device.getUuids()[0]== null);
+			System.out.println(device.getUuids()[0].getUuid()== null);
+			System.out.println("---------------");
+			device.fetchUuidsWithSdp();
 			UUID uuid = device.getUuids()[0].getUuid();
 			socket = device.createRfcommSocketToServiceRecord(uuid);
 		} catch (IOException e) {

@@ -19,11 +19,11 @@ public class RepeatActivity extends Activity {
     static PendingIntent repeatPIntent = null;
 
     static long lastMeasurement = -1;
-    static long interval = AlarmManager.INTERVAL_HALF_HOUR;//AlarmManager.INTERVAL_FIFTEEN_MINUTES; // half hour
+    static long interval = 2 * 60 * 1000;//AlarmManager.INTERVAL_FIFTEEN_MINUTES; // half hour
 
     private AlarmManager manager;
 
-    private TextView timeTextView;
+    static public TextView timeTextView;
     private View scheduleRepeat;
 
     @Override
@@ -64,6 +64,7 @@ public class RepeatActivity extends Activity {
                             0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                     lastMeasurement = System.currentTimeMillis();
+                    System.out.println(interval);
                     System.out.println("Set at " + (lastMeasurement + interval));
                     manager.setRepeating(AlarmManager.RTC_WAKEUP, lastMeasurement, interval, repeatPIntent);
                     ((TextView)scheduleRepeat).setText(R.string.stop_repeat_english);

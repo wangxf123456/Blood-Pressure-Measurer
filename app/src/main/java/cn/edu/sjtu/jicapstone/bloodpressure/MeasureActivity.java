@@ -214,16 +214,22 @@ public class MeasureActivity extends Activity
 		measuredSbp = convert(sbpValue);
 		measuredRate = heartRate;
 		Log.i(TAG, "heartRate is: " + heartRate);
-		ParseObject record = new ParseObject("Record");
-		record.put("userid", getIntent().getStringExtra("userid"));
-		record.put("highPressure", measuredSbp);
-		record.put("lowPressure", measuredDbp);
-		record.put("heartRate", heartRate);
+		String userid = MainActivity.userid;
+		if (userid.length() > 0)
+		{
+			ParseObject record = new ParseObject("Record");
+			record.put("userid", MainActivity.userid);
+			record.put("highPressure", measuredSbp);
+			record.put("lowPressure", measuredDbp);
+			record.put("heartRate", heartRate);
+			Date date = new Date();
+			record.put("date", date);
 
-		Date date = new Date();
-		record.put("date", date);
+			record.saveInBackground();
+		} else {
+			Toast.makeText(MeasureActivity.this, "You have not logged in", Toast.LENGTH_SHORT).show();
+		}
 
-		record.saveInBackground();
 		int measuredSbpHundred = measuredSbp / 100;
 		int measuredSbpTen = (measuredSbp % 100) / 10;
 		int measuredSbpDigit = measuredSbp % 10;

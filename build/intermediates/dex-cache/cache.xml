@@ -2,67 +2,67 @@
 <items version="2" >
 
     <item
-        jar="/Users/wangxiaofei/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-490708013bf3a5f3fef6f5e3e7f2c17fee85a51b.jar" />
-    </item>
-    <item
-        jar="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/pre-dexed/debug/classes-3c2d3ac19e6c24fba1276500b0f4f20e564218df.jar" />
-    </item>
-    <item
-        jar="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/pre-dexed/debug/classes-ece84bdf602559a3d819b2e142bd84bed17a0605.jar" />
-    </item>
-    <item
-        jar="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-8d70952c5530a5b8b940bfbf15aff403a1efae0a.jar" />
-    </item>
-    <item
-        jar="/Users/wangxiaofei/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
-        <dex dex="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-4da2f9ee8a7dc6843c0567e4c9955795da0f463a.jar" />
-    </item>
-    <item
-        jar="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/lib/achartengine-1.1.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="9932e3fb9fbe54e80873e77f72a99f79e33b3250">
-        <dex dex="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/pre-dexed/debug/achartengine-1.1.0-dac81f0a934f08b8c72a23efdb6d7000f1cb9776.jar" />
-    </item>
-    <item
-        jar="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/lib/jwave.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="341f7d4eaac6a28fe171a6726e9f262a62e41402">
-        <dex dex="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/pre-dexed/debug/jwave-8ca332e998da98fdcdc78811059886a09b93dc44.jar" />
-    </item>
-    <item
-        jar="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/lib/Parse/ParseCrashReporting-1.9.2.jar"
+        jar="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/lib/Parse/ParseCrashReporting-1.9.2.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="83f3b1e397f1cc3f05cb9db078d9e364b5f5e218">
-        <dex dex="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.2-61dba69fff369fd52c7cf27a47988a18e64a2a4d.jar" />
+        <dex dex="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.2-dd842a67ce51e9c59d80514db8456f0205fa7ba5.jar" />
     </item>
     <item
-        jar="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/lib/Parse/Parse-1.9.2.jar"
+        jar="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/lib/jwave.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="341f7d4eaac6a28fe171a6726e9f262a62e41402">
+        <dex dex="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/pre-dexed/debug/jwave-836348efb76932e0b1350d46cc0f736a20fa6248.jar" />
+    </item>
+    <item
+        jar="/Users/shuochen/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-d64e9c59470869d0f67256c80333064b174431da.jar" />
+    </item>
+    <item
+        jar="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/pre-dexed/debug/classes-8d849ea63b09ca0dd41fff70b1466383761744b5.jar" />
+    </item>
+    <item
+        jar="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/lib/Parse/Parse-1.9.2.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="fe739334780fe321141e62720822c2d456061899">
-        <dex dex="/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure code/app/build/intermediates/pre-dexed/debug/Parse-1.9.2-d61919f93fa4475785b8a635a58f63e76cb58ba5.jar" />
+        <dex dex="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/pre-dexed/debug/Parse-1.9.2-0657e0dd6dd10f1a007ccf6bf59febffca88c9c9.jar" />
+    </item>
+    <item
+        jar="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-8d824e6217d5537bb8a665e613e1f0e62a232f9b.jar" />
+    </item>
+    <item
+        jar="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/lib/achartengine-1.1.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9932e3fb9fbe54e80873e77f72a99f79e33b3250">
+        <dex dex="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/pre-dexed/debug/achartengine-1.1.0-93c27ded50db1269bb29eced012c28d724ae05e9.jar" />
+    </item>
+    <item
+        jar="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/pre-dexed/debug/classes-addd891451e89407b41816082311becda2b5f5bb.jar" />
+    </item>
+    <item
+        jar="/Users/shuochen/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-b1f23a6e67b791102a7ae0bd3bc597f1b86ceb1b.jar" />
     </item>
 
 </items>

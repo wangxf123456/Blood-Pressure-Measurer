@@ -54,7 +54,7 @@ public class ReceiveThread extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected void onPreExecute() {
 		Log.i(TAG, "onPreExecute");
-		activity.startProgressDialog("²âÁ¿ÖÐ");
+		activity.startProgressDialog("Measuring");
 	}
 
 

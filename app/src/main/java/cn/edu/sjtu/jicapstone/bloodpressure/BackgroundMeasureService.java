@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.parse.ParseObject;
 
@@ -149,12 +150,16 @@ public class BackgroundMeasureService extends IntentService implements DataObtai
 
     @Override
     public void endProgressDialog() {
+        System.out.println(status);
+        System.out.println(status.equals("connecting..."));
         if (status.equals("Searching...")) { // SearchThread
+            System.out.println("in searching ");
             if (mDevice == null) {
                 AlarmReceiver.completeWakefulIntent(callIntent);
             }
         }
-        else if (status.equals("Connecting...")) { // ConnectThread
+        else if (status.equals("connecting...")) { // ConnectThread
+            System.out.println("in connect ");
             if (mSocket == null) {
                 Log.d(TAG, "Connecting error");
                 AlarmReceiver.completeWakefulIntent(callIntent);
@@ -164,6 +169,7 @@ public class BackgroundMeasureService extends IntentService implements DataObtai
             }
         }
         else if (status.equals("Measuring")) { // ReceiveThread
+            System.out.println("in measure ");
             if (dbp < 0) {
                 Log.w(TAG, "Measurement error");
                 AlarmReceiver.completeWakefulIntent(callIntent);
@@ -172,18 +178,23 @@ public class BackgroundMeasureService extends IntentService implements DataObtai
             else {
                 AlarmReceiver.completeWakefulIntent(callIntent);
                 // Record data
-                ParseObject record = new ParseObject("Record");
-                record.put("userid", MainActivity.userid);
-                record.put("highPressure", sbp);
-                record.put("lowPressure", dbp);
-                record.put("heartRate", hrate);
 
-                record.put("date", measuredDate);
+                if (MainActivity.userid.length() > 0) {
+                    ParseObject record = new ParseObject("Record");
+                    record.put("userid", MainActivity.userid);
+                    record.put("highPressure", sbp);
+                    record.put("lowPressure", dbp);
+                    record.put("heartRate", hrate);
 
-                record.saveInBackground();
+                    record.put("date", measuredDate);
+
+                    record.saveInBackground();
+                }
+
             }
         }
         else {
+            System.out.println("in else");
             AlarmReceiver.completeWakefulIntent(callIntent);
             throw new RuntimeException("Wrong message");
         }
