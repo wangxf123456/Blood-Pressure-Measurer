@@ -43,27 +43,22 @@ public class ParseApplication extends Application {
 
     public void createData() {
 
-        for (int i = 0; i < 24; i++) {
+        for (int i = 0; i < 12; i++) {
             ParseObject record = new ParseObject("Record");
             record.put("userid", ParseUser.getCurrentUser().getObjectId());
             if (i <= 8 || i >= 22) {
-                record.put("highPressure", 130 + Math.random() * 20);
-                record.put("lowPressure", 80 + Math.random() * 20);
+                record.put("highPressure", 100 + Math.random() * 20);
+                record.put("lowPressure", 60 + Math.random() * 20);
             } else {
-                record.put("highPressure", 130 + Math.random() * 40);
-                record.put("lowPressure", 80 + Math.random() * 40);
+                record.put("highPressure", 100 + Math.random() * 40);
+                record.put("lowPressure", 60 + Math.random() * 40);
             }
             record.put("heartRate", (int)(60 + Math.random() * 50));
 
             SimpleDateFormat sourceDateFormat = new SimpleDateFormat("yyyy-MM-DD HH:mm:ss");
 
-            try {
-                Date date = sourceDateFormat.parse("2015-07-10 00:00:00.0");
-                date.setHours(i);
-                record.put("date", date);
-            } catch (java.text.ParseException e) {
-                e.printStackTrace();
-            }
+            Date date = new Date();
+            record.put("date", date);
 
             record.saveInBackground();
             System.out.println("record saved");

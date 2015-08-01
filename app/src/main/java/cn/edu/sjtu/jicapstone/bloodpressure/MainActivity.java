@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
 	private TextView loginStateText;
 	private TextView loginStateEngText;
 
-	public static String userid;
+	public static String userid = "";
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

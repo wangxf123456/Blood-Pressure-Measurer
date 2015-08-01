@@ -106,14 +106,7 @@ public class BackgroundMeasureService extends IntentService implements DataObtai
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mSocket != null) {
-            try {
-                mSocket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mSocket = null;
-        }
+        btDisconnect();
         unregisterReceiver(mReceiver);
     }
 
@@ -155,6 +148,7 @@ public class BackgroundMeasureService extends IntentService implements DataObtai
         if (status.equals("Searching...")) { // SearchThread
             System.out.println("in searching ");
             if (mDevice == null) {
+            	Log.w(TAG, "No bluetooth device available");
                 AlarmReceiver.completeWakefulIntent(callIntent);
             }
         }
@@ -192,6 +186,7 @@ public class BackgroundMeasureService extends IntentService implements DataObtai
                 }
 
             }
+            btDisconnect();
         }
         else {
             System.out.println("in else");
@@ -205,6 +200,15 @@ public class BackgroundMeasureService extends IntentService implements DataObtai
         AlarmReceiver.completeWakefulIntent(callIntent);
     }
 
-
+    private void btDisconnect() {
+        if (mSocket != null) {
+            try {
+                mSocket.close();
+            } catch (IOException e) {
+                Log.w(TAG, "Bluetooth Disconenct Fail", e);
+            }
+            mSocket = null;
+        }
+    }
 
 }

@@ -107,8 +107,8 @@ public class ListItemAdapter extends BaseAdapter {
 		
 		holder.dbpView.setText("舒张压:" + String.valueOf(dbpValue));
 		holder.sbpView.setText("收缩压:" + String.valueOf(sbpValue));
-		
-		holder.rateView.setText("心率:" + String.valueOf(rateList.get(position)));
+
+		holder.rateView.setText("");
 		return convertView;
 	}
 	

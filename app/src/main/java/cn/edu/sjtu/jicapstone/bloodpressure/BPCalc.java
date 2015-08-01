@@ -172,6 +172,22 @@ public class BPCalc {
                 break;
             }
         }
+
+        // Basic error checking that checks for some simple measurement errors.
+        if (sbp - dbp < 10f / Parameters.SLOP) {
+            // sbp and dbp too close
+            sbp = -3.0f;
+            dbp = -3.0f;
+        }
+
+        if (sbp < (90f - Parameters.BASE) / Parameters.SLOP) {
+            // sbp too low to be realistic
+            sbp = -3.0f;
+        }
+
+        if (dbp < (60f - Parameters.BASE) / Parameters.SLOP) {
+            dbp = -3.0f;
+        }
     }
 
 

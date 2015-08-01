@@ -23,7 +23,7 @@ public class Parameters {
 	// sbp is the first pulse that SBP_FACTOR times max amplitude
 	// dbp is the last pulse that DBP_FACTOR times max amplitude
 	public static double SBP_FACTOR = 0.58;
-	public static double DBP_FACTOR = 0.4;
+	public static double DBP_FACTOR = 0.45;
 	
 	// the linear formula that convert signal to actual pressure
 	public static double SLOP = 0.396;

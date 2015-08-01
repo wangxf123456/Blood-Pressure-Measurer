@@ -83,21 +83,25 @@ public class ReceiveThread extends AsyncTask<Void, Void, Void> {
 		long startTimeMills = 0;
 
 		BPCalc calc = new BPCalc();
+		BufferedReader br = new BufferedReader(new InputStreamReader(mInputStream));
 
 		while (flag) {
 			try {
-				BufferedReader br = new BufferedReader(new InputStreamReader(mInputStream));
 				String numString;
+
 				while ((numString = br.readLine()).length() == 0) {
 					Log.i(TAG, "RECEIVE THREAD: recv: " + numString);
 				}
+				Log.i(TAG, "num string is: " + numString);
 				try {
 					measuredData = Integer.valueOf(numString);
+					Log.i(TAG, "data: " + measuredData + "");
 				} catch (NumberFormatException e) {
 				}
 
 				if (rising && measuredData > riseHeight) {
 					rising = false;
+					Log.i(TAG, "complete deflation");
 					mOutputStream.write(Parameters.COMPLETE_DEFLATE);
 					startTimeMills = System.currentTimeMillis();
 				}
@@ -107,6 +111,7 @@ public class ReceiveThread extends AsyncTask<Void, Void, Void> {
 				}
 
 				if (!rising && measuredData <= decendHeight) {
+					Log.i(TAG, "end deflation");
 					mOutputStream.write(Parameters.END_INFLATE);
 					flag = false;
 

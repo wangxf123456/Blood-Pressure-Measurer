@@ -5,4 +5,4 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
-<!-- From: file:/Users/shuochen/Desktop/450final/Blood-Pressure-Measurer/app/src/main/res/menu/menu_cloud_management.xml -->
+<!-- From: file:/Users/wangxiaofei/Desktop/my_code/Java/BloodPressure%20code/app/src/main/res/menu/menu_cloud_management.xml -->
